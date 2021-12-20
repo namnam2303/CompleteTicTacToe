@@ -202,7 +202,8 @@ public class Mode1 implements ActionListener {
                         if (!cpuPositions.contains(condition.get(i))) {
                             cpuPos = checkPos((int) condition.get(i)) ? 0 : (int) condition.get(i);
                             if (cpuPos != 0) {
-                                break;
+                                cpuPositions.add(cpuPos);
+                                return cpuPos;
                             }
                         }
                     }
