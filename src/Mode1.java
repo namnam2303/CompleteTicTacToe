@@ -12,13 +12,11 @@ public class Mode1 implements ActionListener {
     JPanel button_panel = new JPanel();
     JLabel textfield = new JLabel();
     JButton[] buttons = new JButton[9];
-    boolean player_turn;
     Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
     Border blackLine = BorderFactory.createLineBorder(Color.black, 5);
     private static List<List> conditions = new ArrayList<>();
     private static List<Integer> cpuPositions = new ArrayList<>();
     private static List<Integer> playerPositions = new ArrayList<>();
-    private int randomNum;
 
     Mode1() {   // Constructor
         setInterface();
@@ -60,14 +58,12 @@ public class Mode1 implements ActionListener {
             buttons[i].setBackground(new Color(25, 25, 25));
         }
     }
-    private void firstTurn() {
-        randomNum = random.nextInt(10);
-        player_turn = randomNum % 2 == 0;
-        if (!player_turn) {     // Máy đánh trước
+    private void firstTurn() {  // Máy đánh trước hay người đánh trước
+        int randomNum = random.nextInt(10);
+        if (randomNum % 2 == 0) {     // Máy đánh trước
             int cpuPos = randomCpuPos();
             buttons[cpuPos - 1].setText("O");
             cpuPositions.add(cpuPos);
-            player_turn = true;
             textfield.setText("Your turn");
         }
     }
@@ -86,19 +82,16 @@ public class Mode1 implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < 9; i++) {
-            if (e.getSource() == buttons[i]) {
-                if (buttons[i].getText() == "") {
+            if (e.getSource() == buttons[i] && buttons[i].getText().equals("")) {
                     setPlayer_turn(buttons, i);
                     setCpu_Turn(buttons);
                 }
             }
         }
-    }
     private void setCpu_Turn(JButton[] buttons) {
         int cpuPos = randomCpuPos();
         buttons[cpuPos - 1].setText("O");
         cpuPositions.add(cpuPos);
-        player_turn = true;
         if (checkStatus() == 1) {
             frame.setEnabled(false);
             JOptionPane.showMessageDialog(frame, "CPU wins.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
@@ -111,7 +104,6 @@ public class Mode1 implements ActionListener {
     private void setPlayer_turn(JButton[] buttons, int i) {
         buttons[i].setText("X");
         playerPositions.add(i + 1);
-        player_turn = false;
         if (checkStatus() == 0) {
             frame.setEnabled(false);
             JOptionPane.showMessageDialog(frame, "You win.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
@@ -185,7 +177,7 @@ public class Mode1 implements ActionListener {
         textfield.setForeground(new Color(25, 25, 25));
     }
 
-    private void draw() {
+    private void draw() {   //  trạng thái hòa
         for (JButton button : buttons) {
             button.setBackground(Color.white);
             button.setBorder(blackLine);
