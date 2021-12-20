@@ -15,7 +15,7 @@ public class Mode1 implements ActionListener {
     boolean player_turn;
     Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
     Border blackLine = BorderFactory.createLineBorder(Color.black, 5);
-    private static List<List> conditions = new ArrayList<List>();
+    private static List<List> conditions = new ArrayList<>();
     private static List<Integer> cpuPositions = new ArrayList<>();
     private static List<Integer> playerPositions = new ArrayList<>();
     private int randomNum;
@@ -31,11 +31,11 @@ public class Mode1 implements ActionListener {
         textfield.setForeground(new Color(255, 255, 255));
         textfield.setFont(new Font("Monaco", Font.BOLD, 75));
         textfield.setHorizontalAlignment(JLabel.CENTER);
-        textfield.setText("Tic-Tac-Toe");
         textfield.setOpaque(true);
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
         button_panel.setLayout(new GridLayout(3, 3));
+        frame.setTitle("TicTacToe by Namnp");
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton();
             button_panel.add(buttons[i]);
@@ -53,7 +53,7 @@ public class Mode1 implements ActionListener {
         player_turn = randomNum % 2 == 0;
         textfield.setText(player_turn ? "Your turn" : "CPU's turn");
         setConditions();
-        if(!player_turn) {
+        if (!player_turn) {
             int cpuPos = randomCpuPos();
             buttons[cpuPos - 1].setText("O");
             cpuPositions.add(cpuPos);
@@ -75,34 +75,37 @@ public class Mode1 implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (player_turn) {
-            for (int i = 0; i < 9; i++) {
-                if (e.getSource() == buttons[i]) {
-                    if (buttons[i].getText() == "") {
-                        buttons[i].setText("X");
-                        playerPositions.add(i + 1);
-                        player_turn = false;
-                        textfield.setText("CPU's turn");
-                        if (end() == 0) {
-                            frame.setEnabled(false);
-                            JOptionPane.showMessageDialog(frame, "You win.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-                            frame.dispose();
+        for (int i = 0; i < 9; i++) {
+            if (e.getSource() == buttons[i]) {
+                if (buttons[i].getText() == "") {
+                    buttons[i].setText("X");
+                    playerPositions.add(i + 1);
+                    player_turn = false;
+                    if (end() == 0) {
+                        frame.setEnabled(false);
+                        JOptionPane.showMessageDialog(frame, "You win.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
+                    }
+                    int cpuPos = randomCpuPos();
+                    buttons[cpuPos - 1].setText("O");
+                    cpuPositions.add(cpuPos);
+                    player_turn = true;
+                    textfield.setText("Your turn");
+                    if (end() == 1) {
+                        frame.setEnabled(false);
+                        JOptionPane.showMessageDialog(frame, "CPU wins.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
+                    }
+                    if (end() == 2) {
+                        for (JButton button : buttons) {
+                            button.setBackground(Color.white);
+                            button.setBorder(blackLine);
+                            button.setForeground(new Color(255, 0, 0));
                         }
-                        int cpuPos = randomCpuPos();
-                        buttons[cpuPos - 1].setText("O");
-                        cpuPositions.add(cpuPos);
-                        player_turn = true;
-                        textfield.setText("Your turn");
-                        if (end() == 1) {
-                            frame.setEnabled(false);
-                            JOptionPane.showMessageDialog(frame, "CPU wins.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
-                            frame.dispose();
-                        }
-                        if(end() == 2) {
-                            frame.setEnabled(false);
-                            JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                            frame.dispose();
-                        }
+                        textfield.setText("Draw");
+                        frame.setEnabled(false);
+                        JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
                     }
                 }
             }
@@ -187,6 +190,9 @@ public class Mode1 implements ActionListener {
                     for (int i = 0; i < condition.size(); i++) {
                         if (!cpuPositions.contains(condition.get(i))) {
                             cpuPos = checkPos((int) condition.get(i)) ? 0 : (int) condition.get(i);
+                            if (cpuPos != 0) {
+                                break;
+                            }
                         }
                     }
                 }
@@ -203,6 +209,7 @@ public class Mode1 implements ActionListener {
         cpuPositions.add(cpuPos);
         return cpuPos;
     }
+
     private boolean checkPos(int position) {
         return playerPositions.contains(position) || cpuPositions.contains(position);
     }
@@ -221,7 +228,7 @@ public class Mode1 implements ActionListener {
                     if (!playerPositions.contains(condition.get(i))) {
                         cpuPos = checkPos((int) condition.get(i)) ? 0 : (int) condition.get(i);
                         if (cpuPos != 0) {
-                            break;
+                            return cpuPos;
                         }
                     }
                 }
