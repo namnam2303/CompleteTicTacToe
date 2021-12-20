@@ -112,24 +112,24 @@ public class Mode1 implements ActionListener {
             count = !buttons[i].getText().equals("") ? ++count : count;
         }
         if (count == 9) {
-            for (List c : conditions) {
-                if (playerPositions.containsAll(c)) {
-                    playerWin((int) c.get(0), (int) c.get(1), (int) c.get(2));
+            for (List condition : conditions) {
+                if (playerPositions.containsAll(condition)) {
+                    playerWin((int) condition.get(0), (int) condition.get(1), (int) condition.get(2));
                     return 0;
-                } else if (cpuPositions.containsAll(c)) {
-                    cpuWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
+                } else if (cpuPositions.containsAll(condition)) {
+                    cpuWins((int) condition.get(0), (int) condition.get(1), (int) condition.get(2));
                     return 1;
                 }
             }
             return 2;
         } else {
-            for (List list : conditions) {
-                if (cpuPositions.containsAll(list)) {
-                    cpuWins((int) list.get(0), (int) list.get(1), (int) list.get(2));
+            for (List condion : conditions) {
+                if (cpuPositions.containsAll(condion)) {
+                    cpuWins((int) condion.get(0), (int) condion.get(1), (int) condion.get(2));
                     return 1;
                 }
-                if (playerPositions.containsAll(list)) {
-                    playerWin((int) list.get(0), (int) list.get(1), (int) list.get(2));
+                if (playerPositions.containsAll(condion)) {
+                    playerWin((int) condion.get(0), (int) condion.get(1), (int) condion.get(2));
                     return 0;
                 }
             }
@@ -168,6 +168,7 @@ public class Mode1 implements ActionListener {
         textfield.setBackground(new Color(255, 255, 255));
         textfield.setForeground(new Color(25, 25, 25));
     }
+
     private void draw() {
         for (JButton button : buttons) {
             button.setBackground(Color.white);
@@ -197,20 +198,16 @@ public class Mode1 implements ActionListener {
                             cpuPos = checkPos((int) condition.get(i)) ? 0 : (int) condition.get(i);
                             if (cpuPos != 0) {
                                 cpuPositions.add(cpuPos);
-                                return cpuPos;
+                                return cpuPos;  // Tìm được điều kiện thắng
                             }
                         }
                     }
                 }
             }
         }
-        if (cpuPos == 0) {
-            cpuPos = preventPlayerWin();
-            if (cpuPos == 0) {
-                while (checkPos(cpuPos) || cpuPos == 0) {
-                    cpuPos = random.nextInt(9) + 1;
-                }
-            }
+        cpuPos = preventPlayerWin();
+        while (checkPos(cpuPos) || cpuPos == 0) {
+            cpuPos = random.nextInt(9) + 1;
         }
         cpuPositions.add(cpuPos);
         return cpuPos;
