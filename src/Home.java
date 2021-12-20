@@ -58,11 +58,11 @@ public class Home implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(btnPvsP)) {
             frame.dispose();
-            Mode2 ticTacToe1 = new Mode2();
+            Mode2 mode2 = new Mode2();
         }
         if(e.getSource().equals(btnPvsCPU)) {
             frame.dispose();
-            Mode1 home2 = new Mode1();
+            Mode1 mode1 = new Mode1();
         }
     }
 }
