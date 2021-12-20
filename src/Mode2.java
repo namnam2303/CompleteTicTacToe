@@ -19,6 +19,10 @@ public class Mode2 implements ActionListener {
     private static List<Integer> x_Positions = new ArrayList<>();
 
     Mode2() {
+        setInterface();
+        setConditions();
+    }
+    private void setInterface() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
@@ -34,6 +38,15 @@ public class Mode2 implements ActionListener {
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
         button_panel.setLayout(new GridLayout(3, 3));
+        setButtons();
+        title_panel.add(textfield);
+        title_panel.setBorder(whileLine);
+        frame.add(title_panel, BorderLayout.NORTH);
+        frame.add(button_panel);
+        x_turn = true;
+        textfield.setText("X turn");
+    }
+    private void setButtons() {
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton();
             button_panel.add(buttons[i]);
@@ -43,16 +56,8 @@ public class Mode2 implements ActionListener {
             buttons[i].setForeground(new Color(255, 255, 255));
             buttons[i].setBackground(new Color(25, 25, 25));
         }
-        title_panel.add(textfield);
-        title_panel.setBorder(whileLine);
-        frame.add(title_panel, BorderLayout.NORTH);
-        frame.add(button_panel);
-        x_turn = true;
-        textfield.setText("X turn");
-        setConditions();
     }
-
-    public static void setConditions() {
+    private void setConditions() {
         conditions.add(Arrays.asList(1, 2, 3));
         conditions.add(Arrays.asList(4, 5, 6));
         conditions.add(Arrays.asList(7, 8, 9));
@@ -68,34 +73,40 @@ public class Mode2 implements ActionListener {
         for (int i = 0; i < 9; i++) {
             if (e.getSource() == buttons[i]) {
                 if (x_turn && buttons[i].getText().equals("")) {
-                    buttons[i].setText("X");
-                    x_Positions.add(i + 1);
-                    x_turn = false;
-                    textfield.setText("O turn");
-                    if (checkStatus() == 0) {
-                        frame.setEnabled(false);
-                        JOptionPane.showMessageDialog(frame, "X wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-                        frame.dispose();
-                    }
-                    if(checkStatus() == 2) {
-                        draw();
-                    }
+                    setX_turn(buttons,i);
                 }
                 if (!x_turn && buttons[i].getText().equals("")) {
-                    buttons[i].setText("O");
-                    o_Positions.add(i + 1);
-                    x_turn = true;
-                    textfield.setText("X turn");
-                    if (checkStatus() == 1) {
-                        frame.setEnabled(false);
-                        JOptionPane.showMessageDialog(frame, "O wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-                        frame.dispose();
-                    }
-                    if (checkStatus() == 2) {
-                        draw();
-                    }
+                    setO_turn(buttons, i);
                 }
             }
+        }
+    }
+    private void setO_turn(JButton[] buttons, int i) {
+        buttons[i].setText("O");
+        o_Positions.add(i + 1);
+        x_turn = true;
+        textfield.setText("X turn");
+        if (checkStatus() == 1) {
+            frame.setEnabled(false);
+            JOptionPane.showMessageDialog(frame, "O wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
+        if (checkStatus() == 2) {
+            draw();
+        }
+    }
+    private void setX_turn(JButton[] buttons, int i) {
+        buttons[i].setText("X");
+        x_Positions.add(i + 1);
+        x_turn = false;
+        textfield.setText("O turn");
+        if (checkStatus() == 0) {
+            frame.setEnabled(false);
+            JOptionPane.showMessageDialog(frame, "X wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
+        if(checkStatus() == 2) {
+            draw();
         }
     }
 
@@ -170,6 +181,6 @@ public class Mode2 implements ActionListener {
         textfield.setText("Draw");
         frame.setEnabled(false);
         JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-        frame.dispose();
+        System.exit(0);
     }
 }
