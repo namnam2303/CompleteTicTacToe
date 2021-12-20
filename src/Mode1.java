@@ -51,7 +51,7 @@ public class Mode1 implements ActionListener {
         frame.add(title_panel, BorderLayout.NORTH);
         frame.add(button_panel);
         player_turn = randomNum % 2 == 0;
-        textfield.setText(player_turn ? "Your turn" : "CPU's turn");
+        textfield.setText("Your turn");
         setConditions();
         if (!player_turn) {     // Máy đánh trước
             int cpuPos = randomCpuPos();
@@ -87,43 +87,26 @@ public class Mode1 implements ActionListener {
                         frame.dispose();
                     }
                     if (checkStatus() == 2) {
-                        for (JButton button : buttons) {
-                            button.setBackground(Color.white);
-                            button.setBorder(blackLine);
-                            button.setForeground(new Color(255, 0, 0));
-                        }
-                        textfield.setText("Draw");
-                        frame.setEnabled(false);
-                        JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                        frame.dispose();
+                        draw();
                     }
                     int cpuPos = randomCpuPos();
                     buttons[cpuPos - 1].setText("O");
                     cpuPositions.add(cpuPos);
                     player_turn = true;
-                    textfield.setText("Your turn");
                     if (checkStatus() == 1) {
                         frame.setEnabled(false);
                         JOptionPane.showMessageDialog(frame, "CPU wins.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                     }
                     if (checkStatus() == 2) {
-                        for (JButton button : buttons) {
-                            button.setBackground(Color.white);
-                            button.setBorder(blackLine);
-                            button.setForeground(new Color(255, 0, 0));
-                        }
-                        textfield.setText("Draw");
-                        frame.setEnabled(false);
-                        JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                        frame.dispose();
+                        draw();
                     }
                 }
             }
         }
     }
 
-    private int checkStatus() {
+    private int checkStatus() { //2- Hòa    0- Player win   1- Cpu wins
         int count = 0;
         for (int i = 0; i < 9; i++) {
             count = !buttons[i].getText().equals("") ? ++count : count;
@@ -155,7 +138,7 @@ public class Mode1 implements ActionListener {
     }
 
 
-    public void playerWin(int a, int b, int c) {
+    private void playerWin(int a, int b, int c) {
         buttons[a - 1].setBackground(Color.white);
         buttons[a - 1].setBorder(blackLine);
         buttons[a - 1].setForeground(new Color(255, 0, 0));
@@ -171,7 +154,7 @@ public class Mode1 implements ActionListener {
         textfield.setForeground(new Color(25, 25, 25));
     }
 
-    public void cpuWins(int a, int b, int c) {
+    private void cpuWins(int a, int b, int c) {
         buttons[a - 1].setBackground(Color.white);
         buttons[a - 1].setBorder(blackLine);
         buttons[a - 1].setForeground(new Color(255, 0, 0));
@@ -184,6 +167,17 @@ public class Mode1 implements ActionListener {
         textfield.setText("CPU wins");
         textfield.setBackground(new Color(255, 255, 255));
         textfield.setForeground(new Color(25, 25, 25));
+    }
+    private void draw() {
+        for (JButton button : buttons) {
+            button.setBackground(Color.white);
+            button.setBorder(blackLine);
+            button.setForeground(new Color(255, 0, 0));
+        }
+        textfield.setText("Draw");
+        frame.setEnabled(false);
+        JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+        frame.dispose();
     }
 
     private int randomCpuPos() {
