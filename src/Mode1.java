@@ -13,7 +13,7 @@ public class Mode1 implements ActionListener {
     JLabel textfield = new JLabel();
     JButton[] buttons = new JButton[9];
     Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
-    Border blackLine = BorderFactory.createLineBorder(Color.black, 5);
+    Border blackLine = BorderFactory.createLineBorder(Color.black, 3);
     private static List<List> conditions = new ArrayList<>();
     private static List<Integer> cpuPositions = new ArrayList<>();
     private static List<Integer> playerPositions = new ArrayList<>();
@@ -160,6 +160,7 @@ public class Mode1 implements ActionListener {
         textfield.setBorder(blackLine);
         textfield.setBackground(new Color(255, 255, 255));
         textfield.setForeground(new Color(25, 25, 25));
+        title_panel.setBorder(blackLine);
     }
 
     private void cpuWins(int a, int b, int c) {
@@ -175,6 +176,7 @@ public class Mode1 implements ActionListener {
         textfield.setText("CPU wins");
         textfield.setBackground(new Color(255, 255, 255));
         textfield.setForeground(new Color(25, 25, 25));
+        title_panel.setBorder(blackLine);
     }
 
     private void draw() {   //  trạng thái hòa
