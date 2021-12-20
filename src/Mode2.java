@@ -99,34 +99,34 @@ public class Mode2 implements ActionListener {
         }
     }
 
-    private int checkStatus() { //2-Hòa 0-X wins 1-O wins
+    private int checkStatus() { //2-Hòa .0-X wins .1-O wins
         int count = 0;
         for (int i = 0; i < 9; i++) {
             count = !buttons[i].getText().equals("") ? ++count : count;
         }
         if (count == 9) {
-            for (List c : conditions) {
-                if (x_Positions.containsAll(c)) {
-                    xWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
+            for (List conditon : conditions) {
+                if (x_Positions.containsAll(conditon)) {
+                    xWins((int) conditon.get(0), (int) conditon.get(1), (int) conditon.get(2));
                     return 0;   // X wins
-                } else if (o_Positions.containsAll(c)) {
-                    oWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
+                } else if (o_Positions.containsAll(conditon)) {
+                    oWins((int) conditon.get(0), (int) conditon.get(1), (int) conditon.get(2));
                     return 1;   // O wins
                 }
             }
             return 2;   // Hòa
         } else {
-            for (List list : conditions) {
-                if (o_Positions.containsAll(list)) {
-                    oWins((int) list.get(0), (int) list.get(1), (int) list.get(2));
+            for (List condition : conditions) {
+                if (o_Positions.containsAll(condition)) {
+                    oWins((int) condition.get(0), (int) condition.get(1), (int) condition.get(2));
                     return 1;
                 }
-                if (x_Positions.containsAll(list)) {
-                    xWins((int) list.get(0), (int) list.get(1), (int) list.get(2));
+                if (x_Positions.containsAll(condition)) {
+                    xWins((int) condition.get(0), (int) condition.get(1), (int) condition.get(2));
                     return 0;
                 }
             }
-            return -1;
+            return -1;  // Chưa tìm được người thắng
         }
     }
 
