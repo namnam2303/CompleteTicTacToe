@@ -72,10 +72,13 @@ public class Mode2 implements ActionListener {
                     x_Positions.add(i + 1);
                     x_turn = false;
                     textfield.setText("O turn");
-                    if(checkStatus() == 0) {
+                    if (checkStatus() == 0) {
                         frame.setEnabled(false);
                         JOptionPane.showMessageDialog(frame, "X wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
+                    }
+                    if(checkStatus() == 2) {
+                        draw();
                     }
                 }
                 if (!x_turn && buttons[i].getText().equals("")) {
@@ -83,28 +86,20 @@ public class Mode2 implements ActionListener {
                     o_Positions.add(i + 1);
                     x_turn = true;
                     textfield.setText("X turn");
-                    if(checkStatus() == 1) {
+                    if (checkStatus() == 1) {
                         frame.setEnabled(false);
                         JOptionPane.showMessageDialog(frame, "O wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                     }
-                }
-                if(checkStatus() == 2) {
-                    for (JButton button :buttons) {
-                        button.setBackground(Color.white);
-                        button.setBorder(blackLine);
-                        button.setForeground(new Color(255, 0, 0));
+                    if (checkStatus() == 2) {
+                        draw();
                     }
-                    textfield.setText("Draw");
-                    frame.setEnabled(false);
-                    JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    frame.dispose();
                 }
             }
         }
     }
 
-    private int checkStatus() {
+    private int checkStatus() { //2-Hòa 0-X wins 1-O wins
         int count = 0;
         for (int i = 0; i < 9; i++) {
             count = !buttons[i].getText().equals("") ? ++count : count;
@@ -113,13 +108,13 @@ public class Mode2 implements ActionListener {
             for (List c : conditions) {
                 if (x_Positions.containsAll(c)) {
                     xWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
-                    return 0;
+                    return 0;   // X wins
                 } else if (o_Positions.containsAll(c)) {
                     oWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
-                    return 1;
+                    return 1;   // O wins
                 }
             }
-            return 2;
+            return 2;   // Hòa
         } else {
             for (List list : conditions) {
                 if (o_Positions.containsAll(list)) {
@@ -155,7 +150,7 @@ public class Mode2 implements ActionListener {
     public void oWins(int a, int b, int c) {
         buttons[a - 1].setBackground(Color.white);
         buttons[a - 1].setBorder(blackLine);
-        buttons[a - 1].setForeground(new Color(255, 0,0));
+        buttons[a - 1].setForeground(new Color(255, 0, 0));
         buttons[b - 1].setBackground(Color.white);
         buttons[b - 1].setBorder(blackLine);
         buttons[b - 1].setForeground(new Color(255, 0, 0));
@@ -165,5 +160,16 @@ public class Mode2 implements ActionListener {
         textfield.setText("O wins");
         textfield.setBackground(new Color(255, 255, 255));
         textfield.setForeground(new Color(25, 25, 25));
+    }
+    private void draw() {
+        for (JButton button : buttons) {
+            button.setBackground(Color.white);
+            button.setBorder(blackLine);
+            button.setForeground(new Color(255, 0, 0));
+        }
+        textfield.setText("Draw");
+        frame.setEnabled(false);
+        JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+        frame.dispose();
     }
 }
