@@ -53,7 +53,7 @@ public class Mode1 implements ActionListener {
         player_turn = randomNum % 2 == 0;
         textfield.setText(player_turn ? "Your turn" : "CPU's turn");
         setConditions();
-        if (!player_turn) {
+        if (!player_turn) {     // Máy đánh trước
             int cpuPos = randomCpuPos();
             buttons[cpuPos - 1].setText("O");
             cpuPositions.add(cpuPos);
@@ -81,12 +81,12 @@ public class Mode1 implements ActionListener {
                     buttons[i].setText("X");
                     playerPositions.add(i + 1);
                     player_turn = false;
-                    if (end() == 0) {
+                    if (checkStatus() == 0) {
                         frame.setEnabled(false);
                         JOptionPane.showMessageDialog(frame, "You win.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                     }
-                    if (end() == 2) {
+                    if (checkStatus() == 2) {
                         for (JButton button : buttons) {
                             button.setBackground(Color.white);
                             button.setBorder(blackLine);
@@ -102,12 +102,12 @@ public class Mode1 implements ActionListener {
                     cpuPositions.add(cpuPos);
                     player_turn = true;
                     textfield.setText("Your turn");
-                    if (end() == 1) {
+                    if (checkStatus() == 1) {
                         frame.setEnabled(false);
                         JOptionPane.showMessageDialog(frame, "CPU wins.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                     }
-                    if (end() == 2) {
+                    if (checkStatus() == 2) {
                         for (JButton button : buttons) {
                             button.setBackground(Color.white);
                             button.setBorder(blackLine);
@@ -123,7 +123,7 @@ public class Mode1 implements ActionListener {
         }
     }
 
-    private int end() {
+    private int checkStatus() {
         int count = 0;
         for (int i = 0; i < 9; i++) {
             count = !buttons[i].getText().equals("") ? ++count : count;
@@ -131,10 +131,10 @@ public class Mode1 implements ActionListener {
         if (count == 9) {
             for (List c : conditions) {
                 if (playerPositions.containsAll(c)) {
-                    xWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
+                    playerWin((int) c.get(0), (int) c.get(1), (int) c.get(2));
                     return 0;
                 } else if (cpuPositions.containsAll(c)) {
-                    oWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
+                    cpuWins((int) c.get(0), (int) c.get(1), (int) c.get(2));
                     return 1;
                 }
             }
@@ -142,11 +142,11 @@ public class Mode1 implements ActionListener {
         } else {
             for (List list : conditions) {
                 if (cpuPositions.containsAll(list)) {
-                    oWins((int) list.get(0), (int) list.get(1), (int) list.get(2));
+                    cpuWins((int) list.get(0), (int) list.get(1), (int) list.get(2));
                     return 1;
                 }
                 if (playerPositions.containsAll(list)) {
-                    xWins((int) list.get(0), (int) list.get(1), (int) list.get(2));
+                    playerWin((int) list.get(0), (int) list.get(1), (int) list.get(2));
                     return 0;
                 }
             }
@@ -155,7 +155,7 @@ public class Mode1 implements ActionListener {
     }
 
 
-    public void xWins(int a, int b, int c) {
+    public void playerWin(int a, int b, int c) {
         buttons[a - 1].setBackground(Color.white);
         buttons[a - 1].setBorder(blackLine);
         buttons[a - 1].setForeground(new Color(255, 0, 0));
@@ -171,7 +171,7 @@ public class Mode1 implements ActionListener {
         textfield.setForeground(new Color(25, 25, 25));
     }
 
-    public void oWins(int a, int b, int c) {
+    public void cpuWins(int a, int b, int c) {
         buttons[a - 1].setBackground(Color.white);
         buttons[a - 1].setBorder(blackLine);
         buttons[a - 1].setForeground(new Color(255, 0, 0));
