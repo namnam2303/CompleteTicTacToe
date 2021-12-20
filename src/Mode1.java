@@ -14,9 +14,9 @@ public class Mode1 implements ActionListener {
     JButton[] buttons = new JButton[9];
     Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
     Border blackLine = BorderFactory.createLineBorder(Color.black, 3);
-    private static List<List> conditions = new ArrayList<>();
-    private static List<Integer> cpuPositions = new ArrayList<>();
-    private static List<Integer> playerPositions = new ArrayList<>();
+    private  List<List> conditions = new ArrayList<>();
+    private  List<Integer> cpuPositions = new ArrayList<>();
+    private  List<Integer> playerPositions = new ArrayList<>();
 
     Mode1() {   // Constructor
         setInterface();
