@@ -14,9 +14,9 @@ public class Mode2 implements ActionListener {
     boolean x_turn;
     Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
     Border blackLine = BorderFactory.createLineBorder(Color.black, 5);
-    private static List<List> conditions = new ArrayList<List>();
-    private static List<Integer> o_Positions = new ArrayList<>();
-    private static List<Integer> x_Positions = new ArrayList<>();
+    private  List<List> conditions = new ArrayList<List>();
+    private  List<Integer> o_Positions = new ArrayList<>();
+    private  List<Integer> x_Positions = new ArrayList<>();
 
     Mode2() {
         setInterface();
