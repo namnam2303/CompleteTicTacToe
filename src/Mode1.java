@@ -86,6 +86,17 @@ public class Mode1 implements ActionListener {
                         JOptionPane.showMessageDialog(frame, "You win.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                     }
+                    if (end() == 2) {
+                        for (JButton button : buttons) {
+                            button.setBackground(Color.white);
+                            button.setBorder(blackLine);
+                            button.setForeground(new Color(255, 0, 0));
+                        }
+                        textfield.setText("Draw");
+                        frame.setEnabled(false);
+                        JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        frame.dispose();
+                    }
                     int cpuPos = randomCpuPos();
                     buttons[cpuPos - 1].setText("O");
                     cpuPositions.add(cpuPos);
