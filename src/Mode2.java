@@ -22,6 +22,7 @@ public class Mode2 implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
+        frame.setTitle("TicTacToe by Namnp");
         frame.getContentPane().setBackground(new Color(50, 50, 50));
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
@@ -29,7 +30,6 @@ public class Mode2 implements ActionListener {
         textfield.setForeground(new Color(255, 255, 255));
         textfield.setFont(new Font("Monaco", Font.BOLD, 75));
         textfield.setHorizontalAlignment(JLabel.CENTER);
-        textfield.setText("Tic-Tac-Toe");
         textfield.setOpaque(true);
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
@@ -90,6 +90,12 @@ public class Mode2 implements ActionListener {
                     }
                 }
                 if(end() == 2) {
+                    for (JButton button :buttons) {
+                        button.setBackground(Color.white);
+                        button.setBorder(blackLine);
+                        button.setForeground(new Color(255, 0, 0));
+                    }
+                    textfield.setText("Draw");
                     frame.setEnabled(false);
                     JOptionPane.showMessageDialog(frame, "Draw!", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
