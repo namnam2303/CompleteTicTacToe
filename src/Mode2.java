@@ -11,7 +11,7 @@ public class Mode2 implements ActionListener {
     JPanel button_panel = new JPanel();
     JLabel textfield = new JLabel();
     JButton[] buttons = new JButton[9];
-    boolean player1_turn;
+    boolean x_turn;
     Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
     Border blackLine = BorderFactory.createLineBorder(Color.black, 5);
     private static List<List> conditions = new ArrayList<List>();
@@ -47,7 +47,7 @@ public class Mode2 implements ActionListener {
         title_panel.setBorder(whileLine);
         frame.add(title_panel, BorderLayout.NORTH);
         frame.add(button_panel);
-        player1_turn = true;
+        x_turn = true;
         textfield.setText("X turn");
         setConditions();
     }
@@ -67,29 +67,29 @@ public class Mode2 implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < 9; i++) {
             if (e.getSource() == buttons[i]) {
-                if (player1_turn && buttons[i].getText() == "") {
+                if (x_turn && buttons[i].getText().equals("")) {
                     buttons[i].setText("X");
                     x_Positions.add(i + 1);
-                    player1_turn = false;
+                    x_turn = false;
                     textfield.setText("O turn");
-                    if(end() == 0) {
+                    if(checkStatus() == 0) {
                         frame.setEnabled(false);
                         JOptionPane.showMessageDialog(frame, "X wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                     }
                 }
-                if (!player1_turn && buttons[i].getText() == "") {
+                if (!x_turn && buttons[i].getText().equals("")) {
                     buttons[i].setText("O");
                     o_Positions.add(i + 1);
-                    player1_turn = true;
+                    x_turn = true;
                     textfield.setText("X turn");
-                    if(end() == 1) {
+                    if(checkStatus() == 1) {
                         frame.setEnabled(false);
                         JOptionPane.showMessageDialog(frame, "O wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
                     }
                 }
-                if(end() == 2) {
+                if(checkStatus() == 2) {
                     for (JButton button :buttons) {
                         button.setBackground(Color.white);
                         button.setBorder(blackLine);
@@ -104,7 +104,7 @@ public class Mode2 implements ActionListener {
         }
     }
 
-    private int end() {
+    private int checkStatus() {
         int count = 0;
         for (int i = 0; i < 9; i++) {
             count = !buttons[i].getText().equals("") ? ++count : count;
