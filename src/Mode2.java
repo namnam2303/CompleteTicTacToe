@@ -6,22 +6,34 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class Mode2 implements ActionListener {
-    JFrame frame = new JFrame();
-    JPanel title_panel = new JPanel();
-    JPanel button_panel = new JPanel();
-    JLabel textfield = new JLabel();
-    JButton[] buttons = new JButton[9];
+    JFrame frame;
+    JPanel title_panel;
+    JPanel button_panel;
+    JLabel textfield;
+    JButton[] buttons;
     boolean x_turn;
-    Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
-    Border blackLine = BorderFactory.createLineBorder(Color.black, 5);
-    private  List<List> conditions = new ArrayList<List>();
-    private  List<Integer> o_Positions = new ArrayList<>();
-    private  List<Integer> x_Positions = new ArrayList<>();
+    Border whileLine;
+    Border blackLine;
+    private List<List> conditions = new ArrayList<List>();
+    private List<Integer> o_Positions = new ArrayList<>();
+    private List<Integer> x_Positions = new ArrayList<>();
 
     Mode2() {
+        frame = new JFrame();
+        title_panel = new JPanel();
+        button_panel = new JPanel();
+        textfield = new JLabel();
+        buttons = new JButton[9];
+        x_turn = true;
+        whileLine = BorderFactory.createLineBorder(Color.white, 2);
+        blackLine = BorderFactory.createLineBorder(Color.black, 5);
+        conditions = new ArrayList<List>();
+        o_Positions = new ArrayList<>();
+        x_Positions = new ArrayList<>();
         setInterface();
         setConditions();
     }
+
     private void setInterface() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
@@ -46,6 +58,7 @@ public class Mode2 implements ActionListener {
         x_turn = true;
         textfield.setText("X turn");
     }
+
     private void setButtons() {
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton();
@@ -57,6 +70,7 @@ public class Mode2 implements ActionListener {
             buttons[i].setBackground(new Color(25, 25, 25));
         }
     }
+
     private void setConditions() {
         conditions.add(Arrays.asList(1, 2, 3));
         conditions.add(Arrays.asList(4, 5, 6));
@@ -73,7 +87,7 @@ public class Mode2 implements ActionListener {
         for (int i = 0; i < 9; i++) {
             if (e.getSource() == buttons[i]) {
                 if (x_turn && buttons[i].getText().equals("")) {
-                    setX_turn(buttons,i);
+                    setX_turn(buttons, i);
                 }
                 if (!x_turn && buttons[i].getText().equals("")) {
                     setO_turn(buttons, i);
@@ -81,6 +95,7 @@ public class Mode2 implements ActionListener {
             }
         }
     }
+
     private void setO_turn(JButton[] buttons, int i) {
         buttons[i].setText("O");
         o_Positions.add(i + 1);
@@ -95,6 +110,7 @@ public class Mode2 implements ActionListener {
             draw();
         }
     }
+
     private void setX_turn(JButton[] buttons, int i) {
         buttons[i].setText("X");
         x_Positions.add(i + 1);
@@ -105,7 +121,7 @@ public class Mode2 implements ActionListener {
             JOptionPane.showMessageDialog(frame, "X wins.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
-        if(checkStatus() == 2) {
+        if (checkStatus() == 2) {
             draw();
         }
     }
@@ -172,6 +188,7 @@ public class Mode2 implements ActionListener {
         textfield.setBackground(new Color(255, 255, 255));
         textfield.setForeground(new Color(25, 25, 25));
     }
+
     private void draw() {
         for (JButton button : buttons) {
             button.setBackground(Color.white);
