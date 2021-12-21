@@ -6,19 +6,30 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class Mode1 implements ActionListener {
-    Random random = new Random();
-    JFrame frame = new JFrame();
-    JPanel title_panel = new JPanel();
-    JPanel button_panel = new JPanel();
-    JLabel textfield = new JLabel();
-    JButton[] buttons = new JButton[9];
-    Border whileLine = BorderFactory.createLineBorder(Color.white, 2);
-    Border blackLine = BorderFactory.createLineBorder(Color.black, 3);
-    private  List<List> conditions = new ArrayList<>();
-    private  List<Integer> cpuPositions = new ArrayList<>();
-    private  List<Integer> playerPositions = new ArrayList<>();
+    Random random;
+    JFrame frame;
+    JPanel title_panel;
+    JPanel button_panel;
+    JLabel textfield;
+    JButton[] buttons;
+    Border whileLine;
+    Border blackLine;
+    private List<List> conditions;
+    private List<Integer> cpuPositions;
+    private List<Integer> playerPositions;
 
     Mode1() {   // Constructor
+        random = new Random();
+        frame = new JFrame();
+        title_panel = new JPanel();
+        button_panel = new JPanel();
+        textfield = new JLabel();
+        buttons = new JButton[9];
+        whileLine = BorderFactory.createLineBorder(Color.white, 2);
+        blackLine = BorderFactory.createLineBorder(Color.black, 3);
+        conditions = new ArrayList<>();
+        cpuPositions = new ArrayList<>();
+        playerPositions = new ArrayList<>();
         setInterface();
         setConditions();
         firstTurn();
@@ -47,6 +58,7 @@ public class Mode1 implements ActionListener {
         frame.add(title_panel, BorderLayout.NORTH);
         frame.add(button_panel);
     }
+
     private void setButtons() {
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton();
@@ -58,6 +70,7 @@ public class Mode1 implements ActionListener {
             buttons[i].setBackground(new Color(25, 25, 25));
         }
     }
+
     private void firstTurn() {  // Máy đánh trước hay người đánh trước
         int randomNum = random.nextInt(10);
         if (randomNum % 2 == 0) {     // Máy đánh trước
@@ -83,11 +96,12 @@ public class Mode1 implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < 9; i++) {
             if (e.getSource() == buttons[i] && buttons[i].getText().equals("")) {
-                    setPlayer_turn(buttons, i);
-                    setCpu_Turn(buttons);
-                }
+                setPlayer_turn(buttons, i);
+                setCpu_Turn(buttons);
             }
         }
+    }
+
     private void setCpu_Turn(JButton[] buttons) {
         int cpuPos = randomCpuPos();
         buttons[cpuPos - 1].setText("O");
@@ -97,10 +111,11 @@ public class Mode1 implements ActionListener {
             JOptionPane.showMessageDialog(frame, "CPU wins.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
-        if(checkStatus() == 2) {
+        if (checkStatus() == 2) {
             draw();
         }
     }
+
     private void setPlayer_turn(JButton[] buttons, int i) {
         buttons[i].setText("X");
         playerPositions.add(i + 1);
@@ -109,7 +124,7 @@ public class Mode1 implements ActionListener {
             JOptionPane.showMessageDialog(frame, "You win.", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
-        if(checkStatus() == 2) {
+        if (checkStatus() == 2) {
             draw();
         }
     }
@@ -248,5 +263,4 @@ public class Mode1 implements ActionListener {
         }
         return cpuPos;
     }
-
 }
